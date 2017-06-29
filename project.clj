@@ -3,7 +3,8 @@
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
 
-  :dependencies [[cider/cider-nrepl "0.15.0-SNAPSHOT"]
+  :dependencies [[cider/cider-nrepl "0.14.0"]
+                 [refactor-nrepl "2.3.1"]
                  [clj-time "0.13.0"]
                  [com.google.guava/guava "20.0"]
                  [com.novemberain/monger "3.1.0" :exclusions [com.google.guava/guava]]
@@ -28,7 +29,8 @@
                  [ring-webjars "0.2.0"]
                  [ring/ring-core "1.6.1"]
                  [ring/ring-defaults "0.3.0"]
-                 [selmer "1.10.7"]]
+                 [selmer "1.10.7"]
+                 [image-lib "0.2.0-SNAPSHOT"]]
 
   :min-lein-version "2.0.0"
 
@@ -50,7 +52,7 @@
    :css-dirs ["resources/public/css"]
    :nrepl-middleware
    [cemerick.piggieback/wrap-cljs-repl cider.nrepl/cider-middleware]}
-  
+
 
   :profiles
   {:uberjar {:omit-source true
@@ -65,8 +67,8 @@
                  :pretty-print false
                  :closure-warnings
                  {:externs-validation :off :non-standard-jsdoc :off}}}}}
-             
-             
+
+
              :aot :all
              :uberjar-name "photo-api.jar"
              :source-paths ["env/prod/clj"]
@@ -100,9 +102,9 @@
                       :source-map true
                       :optimizations :none
                       :pretty-print true}}}}
-                  
-                  
-                  
+
+
+
                   :doo {:build "test"}
                   :source-paths ["env/dev/clj"]
                   :resource-paths ["env/dev/resources"]
@@ -119,7 +121,7 @@
                       :main "photo-api.doo-runner"
                       :optimizations :whitespace
                       :pretty-print true}}}}
-                  
+
                   }
    :profiles/dev {}
    :profiles/test {}})

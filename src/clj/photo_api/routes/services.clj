@@ -1,7 +1,8 @@
 (ns photo-api.routes.services
   (:require [ring.util.http-response :refer :all]
             [compojure.api.sweet :refer :all]
-            [schema.core :as s]))
+            [schema.core :as s]
+            [image-lib.core :refer [all-projects]]))
 
 (defapi service-routes
   {:swagger {:ui "/swagger-ui"
@@ -9,10 +10,15 @@
              :data {:info {:version "1.0.0"
                            :title "Sample API"
                            :description "Sample Services"}}}}
-  
-  (context "/api" []
-    :tags ["thingie"]
 
+  (context "/api" []
+    :tags ["photos"]
+
+    (GET "/projects" []
+         :return s/Str
+         :query-params [year :- Long]
+         :summary "returns some projects"
+         (ok (str (all-projects))))
     (GET "/plus" []
       :return       Long
       :query-params [x :- Long, {y :- Long 1}]

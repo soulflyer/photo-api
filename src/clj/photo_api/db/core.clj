@@ -3,7 +3,8 @@
               [monger.collection :as mc]
               [monger.operators :refer :all]
               [mount.core :refer [defstate]]
-              [photo-api.config :refer [env]]))
+              [photo-api.config :refer [env]]
+              [image-lib.core :refer [all-projects]]))
 
 (defstate db*
   :start (-> env :database-url mg/connect-via-uri)
