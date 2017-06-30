@@ -2,6 +2,7 @@
   (:require [ring.util.http-response :refer :all]
             [compojure.api.sweet :refer :all]
             [schema.core :as s]
+            [photo-api.db.core :refer :all]
             [image-lib.core :refer [all-projects]]))
 
 (defapi service-routes
@@ -18,7 +19,7 @@
          :return s/Str
          :query-params [year :- Long]
          :summary "returns some projects"
-         (ok (str (all-projects))))
+         (ok (str (all-projects db "images"))))
     (GET "/plus" []
       :return       Long
       :query-params [x :- Long, {y :- Long 1}]
