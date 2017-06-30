@@ -10,11 +10,8 @@ request is made to the `/` URI using the `GET` method.
 
 ```
 (defroutes home-routes
-  (GET "/" []
-       (home-page))
-  (GET "/docs" []
-       (-> (response/ok (-> "docs/docs.md" io/resource slurp))
-           (response/header "Content-Type" "text/plain; charset=utf-8"))))
+  (GET "/" [] (home-page))
+  (GET "/about" [] (about-page)))
 ```
 
 The `home-page` function will in turn call the `photo-api.layout/render` function
@@ -22,16 +19,27 @@ to render the HTML content:
 
 ```
 (defn home-page []
-  (layout/render "home.html"))
+  (layout/render
+    "home.html" {:docs (-> "docs/docs.md" io/resource slurp)}))
 ```
 
-The page contains a link to the compiled ClojureScript found in the `target/cljsbuild/public` folder:
+The `render` function will render the `home.html` template found in the `resources/templates`
+folder using a parameter map containing the `:docs` key. This key points to the
+contents of the `resources/docs/docs.md` file containing these instructions.
+
+
+The HTML templates are written using [Selmer](https://github.com/yogthos/Selmer) templating engine.
+
 
 ```
-{% script "/js/app.js" %}
+<div class="row">
+  <div class="col-sm-12">
+    {{docs|markdown}}
+  </div>
+</div>
 ```
 
-The rest of this page is rendered by ClojureScript found in the `src/cljs/photo_api/core.cljs` file.
+<a class="btn btn-primary" href="http://www.luminusweb.net/docs/html_templating.md">learn more about HTML templating »</a>
 
 
 

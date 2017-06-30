@@ -1,6 +1,5 @@
 (ns user
   (:require [mount.core :as mount]
-            [photo-api.figwheel :refer [start-fw stop-fw cljs]]
             photo-api.core))
 
 (defn start []
@@ -12,5 +11,3 @@
 (defn restart []
   (stop)
   (start))
-
-
