@@ -3,6 +3,8 @@
             [compojure.api.sweet :refer :all]
             [schema.core :as s]
             [photo-api.db.core :refer :all]
+            [clojure.data.json :as json]
+            [clojure.java.shell :refer [sh]]
             [image-lib.core :refer [all-projects]]))
 
 (defapi service-routes
@@ -13,39 +15,25 @@
                            :description "Sample Services"}}}}
 
   (context "/api" []
-    :tags ["photos"]
+           :tags ["photos"]
 
-    (GET "/projects" []
-         :return s/Str
-         :query-params [year :- Long]
-         :summary "returns some projects"
-         (ok (str (all-projects db "images"))))
-    (GET "/plus" []
-      :return       Long
-      :query-params [x :- Long, {y :- Long 1}]
-      :summary      "x+y with query-parameters. y defaults to 1."
-      (ok (+ x y)))
+           (GET "/projects" []
+                :return s/Str
+                :summary "returns all projects"
+                (ok (str (all-projects db "images"))))
 
-    (POST "/minus" []
-      :return      Long
-      :body-params [x :- Long, y :- Long]
-      :summary     "x-y with body-parameters."
-      (ok (- x y)))
+           (GET "/open/project/:yr/:mo/:pr" [yr mo pr]
+                :return s/Str
+                :summary "Open a project in whatever external program is specified in options db"
+                (ok (do
+                      (println (external-viewer db preference-collection)
+                          (str (medium-dir db preference-collection)
+                               "/"
+                               yr "/" mo "/" pr "/*.jpg"))
+                      (str "Opening " pr))))
 
-    (GET "/times/:x/:y" []
-      :return      Long
-      :path-params [x :- Long, y :- Long]
-      :summary     "x*y with path-parameters"
-      (ok (* x y)))
-
-    (POST "/divide" []
-      :return      Double
-      :form-params [x :- Long, y :- Long]
-      :summary     "x/y with form-parameters"
-      (ok (/ x y)))
-
-    (GET "/power" []
-      :return      Long
-      :header-params [x :- Long, y :- Long]
-      :summary     "x^y with header-parameters"
-      (ok (long (Math/pow x y))))))
+           (GET "/plus" []
+                :return       Long
+                :query-params [x :- Long, {y :- Long 1}]
+                :summary      "x+y with query-parameters. y defaults to 1."
+                (ok (+ x y)))))

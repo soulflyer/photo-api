@@ -4,7 +4,18 @@
               [monger.operators :refer :all]
               [mount.core :refer [defstate]]
               [photo-api.config :refer [env]]
-              [image-lib.core :refer [all-projects]]))
+              [image-lib.core :refer [all-projects
+                                      preference]]))
+
+(def keyword-collection       "keywords")
+(def preference-collection "preferences")
+(def image-collection           "images")
+
+(defn external-viewer [db prefs]
+  (preference db prefs "external-viewer"))
+
+(defn medium-dir [db prefs]
+  (preference db prefs "medium-directory"))
 
 (defstate db*
   :start (-> env :database-url mg/connect-via-uri)

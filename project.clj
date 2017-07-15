@@ -1,9 +1,9 @@
 (defproject photo-api "0.1.0-SNAPSHOT"
 
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
+  :description "API for geting data from photos db"
+  :url "http://soulflyer.com"
 
-  :dependencies [[cider/cider-nrepl "0.15.0-SNAPSHOT"]
+  :dependencies [[cider/cider-nrepl "0.14.0"]
                  [clj-time "0.13.0"]
                  [com.google.guava/guava "20.0"]
                  [com.novemberain/monger "3.1.0" :exclusions [com.google.guava/guava]]
@@ -21,6 +21,7 @@
                  [org.clojure/clojure "1.8.0"]
                  [org.clojure/tools.cli "0.3.5"]
                  [org.clojure/tools.logging "0.4.0"]
+                 [org.clojure/data.json "0.2.6"]
                  [org.webjars.bower/tether "1.4.0"]
                  [org.webjars/bootstrap "4.0.0-alpha.5"]
                  [org.webjars/font-awesome "4.7.0"]
