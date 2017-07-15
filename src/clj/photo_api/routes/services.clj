@@ -5,6 +5,7 @@
             [photo-api.db.core :refer :all]
             [clojure.data.json :as json]
             [clojure.java.shell :refer [sh]]
+            [clojure.string :as str]
             [image-lib.core :refer [all-projects]]))
 
 (defapi service-routes
@@ -25,15 +26,13 @@
            (GET "/open/project/:yr/:mo/:pr" [yr mo pr]
                 :return s/Str
                 :summary "Open a project in whatever external program is specified in options db"
-                (ok (do
-                      (println (external-viewer db preference-collection)
-                          (str (medium-dir db preference-collection)
-                               "/"
-                               yr "/" mo "/" pr "/*.jpg"))
-                      (str "Opening " pr))))
-
-           (GET "/plus" []
-                :return       Long
-                :query-params [x :- Long, {y :- Long 1}]
-                :summary      "x+y with query-parameters. y defaults to 1."
-                (ok (+ x y)))))
+                (ok (let [path (str (medium-dir db preference-collection)
+                                    "/"
+                                    yr "/" mo "/" pr)
+                          files (str/split (:out (sh "ls" path)) #"\n")
+                          paths (reduce #(str %1 " " %2) (map #(str path "/" %) files))
+                          viewer (external-viewer db preference-collection)
+                          command (str viewer " " paths)]
+                      (do
+                        (sh "xargs" viewer :in paths)
+                        (str "Running " command)))))))
