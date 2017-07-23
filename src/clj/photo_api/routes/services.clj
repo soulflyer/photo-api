@@ -6,7 +6,9 @@
             [clojure.data.json :as json]
             [clojure.java.shell :refer [sh]]
             [clojure.string :as str]
-            [image-lib.core :refer [all-projects]]))
+            [image-lib.core :refer [all-projects
+                                    project-images
+                                    project-paths]]))
 
 (defapi service-routes
   {:swagger {:ui "/swagger-ui"
@@ -23,9 +25,14 @@
                 :summary "returns all projects"
                 (ok (str (all-projects db "images"))))
 
+           (GET "/project/:yr/:mo/:pr" [yr mo pr]
+                :return s/Str
+                :summary "returns all picture paths for a given project"
+                (ok (str (project-paths db "images" yr mo pr))))
+
            (GET "/open/project/:yr/:mo/:pr" [yr mo pr]
                 :return s/Str
-                :summary "Open a project in whatever external program is specified in options db"
+                :summary "Open a project in external program as specified in options db"
                 (ok (let [path (str (medium-dir db preference-collection)
                                     "/"
                                     yr "/" mo "/" pr)
@@ -35,4 +42,4 @@
                           command (str viewer " " paths)]
                       (do
                         (sh "xargs" viewer :in paths)
-                        (str "Running " command)))))))
+                        (str "Opening " path)))))))

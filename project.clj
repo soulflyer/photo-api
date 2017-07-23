@@ -65,7 +65,8 @@
                                  [org.apache.httpcomponents/httpcore "4.4"]
                                  [org.clojure/core.cache "0.6.3"]
                                  [org.seleniumhq.selenium/selenium-server "2.48.2"]]
-                  :plugins      [[com.jakemccrary/lein-test-refresh "0.19.0"]]
+                  :plugins      [[com.jakemccrary/lein-test-refresh "0.19.0"]
+                                 [refactor-nrepl "2.3.0-SNAPSHOT"]]
                   :source-paths ["env/dev/clj"]
                   :resource-paths ["env/dev/resources"]
                   :repl-options {:init-ns user}
