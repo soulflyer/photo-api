@@ -4,8 +4,7 @@
               [monger.operators :refer :all]
               [mount.core :refer [defstate]]
               [photo-api.config :refer [env]]
-              [image-lib.core :refer [all-projects
-                                      preference]]))
+              [image-lib.preferences :refer [preference]]))
 
 (def keyword-collection       "keywords")
 (def preference-collection "preferences")

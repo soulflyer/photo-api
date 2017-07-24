@@ -6,19 +6,27 @@
             [clojure.data.json :as json]
             [clojure.java.shell :refer [sh]]
             [clojure.string :as str]
-            [image-lib.core :refer [all-projects
-                                    project-images
-                                    project-paths]]))
+            [image-lib.projects :refer [all-projects
+                                        project-images
+                                        project-paths]]
+            [image-lib.preferences :refer [preference]]))
 
 (defapi service-routes
   {:swagger {:ui "/swagger-ui"
              :spec "/swagger.json"
-             :data {:info {:version "1.0.0"
-                           :title "Sample API"
-                           :description "Sample Services"}}}}
+             :data
+             {:info
+              {:version "1.0.0"
+               :title "Photos API"
+               :description "Access a mongo database containing details of photos"}}}}
 
   (context "/api" []
            :tags ["photos"]
+
+           (GET "/preferences/:pref" [pref]
+                :return s/Str
+                :summary "returns preferences as stored in the db"
+                (ok (preference db "preferences" pref)))
 
            (GET "/projects" []
                 :return s/Str

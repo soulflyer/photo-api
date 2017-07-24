@@ -30,7 +30,7 @@
                  [ring/ring-core "1.6.1"]
                  [ring/ring-defaults "0.3.0"]
                  [selmer "1.10.7"]
-                 [image-lib "0.2.0-SNAPSHOT"]]
+                 [image-lib "0.2.1-SNAPSHOT"]]
 
   :min-lein-version "2.0.0"
 
