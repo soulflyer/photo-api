@@ -16,6 +16,9 @@
 (defn medium-dir [db prefs]
   (preference db prefs "medium-directory"))
 
+(defn json-dir [db prefs]
+  (preference db prefs "json-directory"))
+
 (defstate db*
   :start (-> env :database-url mg/connect-via-uri)
   :stop (-> db* :conn mg/disconnect))

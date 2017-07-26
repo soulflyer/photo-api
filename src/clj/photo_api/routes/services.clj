@@ -41,20 +41,28 @@
            (GET "/build/json/:divecentre/:filename/:filelist" [divecentre filename filelist]
                 :return s/Str
                 :summary "creates a JSON file containing the pics in filelist."
-                (ok (do
-                      (sh "sh" "-c" (str "/Users/iain/bin/build-json -l " filelist  " >/tmp/" filename))
-                      (str "created JSON file " filename " for " divecentre))))
+                (ok
+                  (let [path (str (json-dir db preference-collection))
+                        fn (if (= \/ (first filename))
+                             filename
+                             (str path "/" filename))]
+                    (do
+                      (sh "sh" "-c" (str "/Users/iain/bin/build-json -l " filelist
+                                         " -d " divecentre
+                                         " > " fn))
+                      (str "created JSON file " filename " for " divecentre)))))
 
            (GET "/open/project/:yr/:mo/:pr" [yr mo pr]
                 :return s/Str
                 :summary "Open a project in external program as specified in options db"
-                (ok (let [path (str (medium-dir db preference-collection)
-                                    "/"
-                                    yr "/" mo "/" pr)
-                          files (str/split (:out (sh "ls" path)) #"\n")
-                          paths (reduce #(str %1 " " %2) (map #(str path "/" %) files))
-                          viewer (external-viewer db preference-collection)
-                          command (str viewer " " paths)]
-                      (do
-                        (sh "xargs" viewer :in paths)
-                        (str "Opening " path)))))))
+                (ok
+                  (let [path (str (medium-dir db preference-collection)
+                                  "/"
+                                  yr "/" mo "/" pr)
+                        files (str/split (:out (sh "ls" path)) #"\n")
+                        paths (reduce #(str %1 " " %2) (map #(str path "/" %) files))
+                        viewer (external-viewer db preference-collection)
+                        command (str viewer " " paths)]
+                    (do
+                      (sh "xargs" viewer :in paths)
+                      (str "Opening " path)))))))
