@@ -38,6 +38,13 @@
                 :summary "returns all picture paths for a given project"
                 (ok (str (project-paths db "images" yr mo pr))))
 
+           (GET "/build/json/:divecentre/:filename/:filelist" [divecentre filename filelist]
+                :return s/Str
+                :summary "creates a JSON file containing the pics in filelist."
+                (ok (do
+                      (sh "sh" "-c" (str "/Users/iain/bin/build-json -l " filelist  " >/tmp/" filename))
+                      (str "created JSON file " filename " for " divecentre))))
+
            (GET "/open/project/:yr/:mo/:pr" [yr mo pr]
                 :return s/Str
                 :summary "Open a project in external program as specified in options db"
