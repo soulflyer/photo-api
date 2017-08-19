@@ -11,6 +11,9 @@
                                         project-paths]]
             [image-lib.preferences :refer [preference]]))
 
+(defn zipfile [zipf filename]
+  (sh "sh" "-c" (str "zip -jq " zipf " " filename)))
+
 (defapi service-routes
   {:swagger {:ui "/swagger-ui"
              :spec "/swagger.json"
@@ -45,11 +48,21 @@
                   (let [path (str (json-dir db preference-collection))
                         fn (if (= \/ (first filename))
                              filename
-                             (str path "/" filename))]
+                             (str path "/" filename))
+                        zipname (str "/Users/iain/Pictures/Published/zip/" filename ".zip")
+                        ;; The following monstrosity is because there is a \" at the start of
+                        ;; filelist. wut?
+                        files (str/split (str/replace filelist #"\"" "") #" ")
+                        ]
                     (do
                       (sh "sh" "-c" (str "/Users/iain/bin/build-json -l " filelist
                                          " -d " divecentre
-                                         " > " fn))
+                                         " > " fn ))
+                      (doall (map
+                               #(zipfile
+                                  zipname
+                                  (str "/Users/iain/Pictures/Published/large/" %))
+                               files))
                       (str "created JSON file " filename " for " divecentre)))))
 
            (GET "/open/project/:yr/:mo/:pr" [yr mo pr]
