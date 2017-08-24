@@ -16,8 +16,14 @@
 (defn medium-dir [db prefs]
   (preference db prefs "medium-directory"))
 
+(defn large-dir [db prefs]
+  (preference db prefs "large-directory"))
+
 (defn json-dir [db prefs]
   (preference db prefs "json-directory"))
+
+(defn zip-dir [db prefs]
+  (preference db prefs "zip-directory"))
 
 (defstate db*
   :start (-> env :database-url mg/connect-via-uri)

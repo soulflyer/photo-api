@@ -46,23 +46,22 @@
                 :summary "creates a JSON file containing the pics in filelist."
                 (ok
                   (let [path (str (json-dir db preference-collection))
+                        ldir (str (large-dir db preference-collection))
+                        zdir (str (zip-dir db preference-collection))
                         fn (if (= \/ (first filename))
                              filename
                              (str path "/" filename))
-                        zipname (str "/Users/iain/Pictures/Published/zip/" filename ".zip")
+                        zipname (str zdir "/" filename ".zip")
                         ;; The following monstrosity is because there is a \" at the start of
                         ;; filelist. wut?
-                        files (str/split (str/replace filelist #"\"" "") #" ")
-                        ]
+                        files (sort (str/split (str/replace filelist #"\"" "") #" "))
+                        flist (str "\"" (str/join " " files) "\"")]
                     (do
-                      (sh "sh" "-c" (str "/Users/iain/bin/build-json -l " filelist
+                      ;; TODO replace this shell script with clojure code
+                      (sh "sh" "-c" (str "/Users/iain/bin/build-json -l " flist
                                          " -d " divecentre
                                          " > " fn ))
-                      (doall (map
-                               #(zipfile
-                                  zipname
-                                  (str "/Users/iain/Pictures/Published/large/" %))
-                               files))
+                      (doall (map #(zipfile zipname (str ldir "/" %)) files))
                       (str "created JSON file " filename " for " divecentre)))))
 
            (GET "/open/project/:yr/:mo/:pr" [yr mo pr]
