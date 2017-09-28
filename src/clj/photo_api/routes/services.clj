@@ -6,6 +6,7 @@
             [clojure.data.json :as json]
             [clojure.java.shell :refer [sh]]
             [clojure.string :as str]
+            [ring.util.codec :refer [url-decode]]
             [image-lib.projects :refer [all-projects
                                         project-images
                                         project-paths]]
@@ -52,10 +53,8 @@
                              filename
                              (str path "/" filename))
                         zipname (str zdir "/" filename ".zip")
-                        ;; The following monstrosity is because there is a \" at the start of
-                        ;; filelist. wut?
-                        files (sort (str/split (str/replace filelist #"\"" "") #" "))
-                        flist (str "\"" (str/join " " files) "\"")]
+                        files (sort (str/split filelist #" "))
+                        flist (str/join " " files)]
                     (do
                       ;; TODO replace this shell script with clojure code
                       (sh "sh" "-c" (str "/Users/iain/bin/build-json -l " flist
@@ -63,6 +62,19 @@
                                          " > " fn ))
                       (doall (map #(zipfile zipname (str ldir "/" %)) files))
                       (str "created JSON file " filename " for " divecentre)))))
+
+           (GET "/open/:size/:filelist" [size filelist]
+                ;; size is ignored for now, always opens medium
+                :return s/Str
+                :summary "Opens a list of files in an external viewer."
+                (ok
+                  (let [viewer (external-viewer db preference-collection)
+                        path   (medium-dir db preference-collection)
+                        files  (str/split (url-decode filelist) #" ")
+                        paths  (str/join " " (map #(str path "/" %) files))]
+                    (do
+                      (sh "sh" "-c" (str viewer " " paths))
+                      (str "Opening " paths)))))
 
            (GET "/open/project/:yr/:mo/:pr" [yr mo pr]
                 :return s/Str

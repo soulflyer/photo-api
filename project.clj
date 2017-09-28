@@ -27,6 +27,7 @@
                  [org.webjars/font-awesome "4.7.0"]
                  [org.webjars/jquery "3.1.1"]
                  [ring-webjars "0.2.0"]
+                 [ring/ring-codec "1.0.1"]
                  [ring/ring-core "1.6.1"]
                  [ring/ring-defaults "0.3.0"]
                  [selmer "1.10.7"]
