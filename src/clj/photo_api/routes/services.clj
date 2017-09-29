@@ -3,10 +3,10 @@
             [compojure.api.sweet :refer :all]
             [schema.core :as s]
             [photo-api.db.core :refer :all]
-            [clojure.data.json :as json]
             [clojure.java.shell :refer [sh]]
             [clojure.string :as str]
             [ring.util.codec :refer [url-decode]]
+            [cheshire.core :as json]
             [image-lib.projects :refer [all-projects
                                         project-images
                                         project-paths]]
@@ -41,6 +41,11 @@
                 :return s/Str
                 :summary "returns all picture paths for a given project"
                 (ok (str (project-paths db "images" yr mo pr))))
+
+           (GET "/project2/:yr/:mo/:pr" [yr mo pr]
+                :return s/Str
+                :summary "returns all picture details for a given project."
+                (ok (json/generate-string (project-images db "images" yr mo pr))))
 
            (GET "/build/json/:divecentre/:filename/:filelist" [divecentre filename filelist]
                 :return s/Str

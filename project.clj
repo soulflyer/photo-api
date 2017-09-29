@@ -3,7 +3,8 @@
   :description "API for geting data from photos db"
   :url "http://soulflyer.com"
 
-  :dependencies [[cider/cider-nrepl "0.14.0"]
+  :dependencies [[cheshire "5.8.0"]
+                 [cider/cider-nrepl "0.14.0"]
                  [clj-time "0.13.0"]
                  [com.google.guava/guava "20.0"]
                  [com.novemberain/monger "3.1.0" :exclusions [com.google.guava/guava]]
