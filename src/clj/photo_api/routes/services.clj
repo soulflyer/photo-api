@@ -37,12 +37,12 @@
                 :summary "returns all projects"
                 (ok (str (all-projects db "images"))))
 
-           (GET "/project/:yr/:mo/:pr" [yr mo pr]
-                :return s/Str
-                :summary "returns all picture paths for a given project"
-                (ok (str (project-paths db "images" yr mo pr))))
+           ;; (GET "/project/:yr/:mo/:pr" [yr mo pr]
+           ;;      :return s/Str
+           ;;      :summary "returns all picture paths for a given project"
+           ;;      (ok (str (project-paths db "images" yr mo pr))))
 
-           (GET "/project2/:yr/:mo/:pr" [yr mo pr]
+           (GET "/project/:yr/:mo/:pr" [yr mo pr]
                 :return s/Str
                 :summary "returns all picture details for a given project."
                 (ok (json/generate-string (project-images db "images" yr mo pr))))
