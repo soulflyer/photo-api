@@ -10,7 +10,8 @@
             [image-lib.projects :refer [all-projects
                                         project-images
                                         project-paths]]
-            [image-lib.preferences :refer [preference]]))
+            [image-lib.preferences :refer [preference
+                                           preference!]]))
 
 (defn zipfile [zipf filename]
   (sh "sh" "-c" (str "zip -jq " zipf " " filename)))
@@ -31,6 +32,11 @@
                 :return s/Str
                 :summary "returns preferences as stored in the db"
                 (ok (preference db "preferences" pref)))
+
+           (GET "/preferences/set/:pref/:value" [pref value]
+                :return s/Str
+                :summary "sets a preference in the database"
+                (ok (str (preference! db "preferences" pref value))))
 
            (GET "/projects" []
                 :return s/Str
