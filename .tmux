@@ -33,5 +33,5 @@ $TME send-keys -t :$LABEL.2 'ec .' C-m
 $TME select-pane -t 2
 # *************************************************************************************
 tmux send-keys -t :$LABEL.2 M-x 'cider-jack-in' C-m
-sleep 60
+sleep 90
 tmux send-keys -t :$LABEL.2 '(mount/start)'
