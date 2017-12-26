@@ -12,8 +12,9 @@
                                         project-paths]]
             [image-lib.preferences :refer [preference
                                            preference!]]
-            [photo-api.routes.helpers.open  :as open]
-            [photo-api.routes.helpers.build :as build]))
+            [photo-api.routes.helpers.open     :as open]
+            [photo-api.routes.helpers.build    :as build]
+            [photo-api.routes.helpers.keywords :as keywords]))
 
 (defapi service-routes
   {:swagger {:ui "/swagger-ui"
@@ -30,14 +31,39 @@
            (GET "/projects" []
                 :return s/Str
                 :summary "returns all projects"
-                (ok (str (all-projects db "images"))))
+                (ok (json/generate-string (all-projects db "images"))))
 
            (GET "/project/:yr/:mo/:pr" [yr mo pr]
                 :return s/Str
                 :summary "returns all picture details for a given project."
                 (ok (json/generate-string (project-images db "images" yr mo pr))))
 
-
+           (context "/keywords" []
+                    :tags ["keywords"]
+                    (GET "/:keyword" [keyword]
+                         :return s/Str
+                         :summary "returns a keyword object"
+                         (ok (json/generate-string (keywords/keyword keyword))))
+                    (GET "/:keyword/children" [keyword]
+                         :return s/Str
+                         :summary "returns the sub keywords of <kw>"
+                         (ok (json/generate-string (keywords/children keyword))))
+                    (GET "/add/:parent/:keyword" [parent keyword]
+                         :return s/Str
+                         :summary "adds <keyword> as child of <parent>"
+                         (ok (str (keywords/add! parent keyword))))
+                    (GET "/:keyword/best" [keyword]
+                         :return s/Str
+                         :summary "returns the selected, or best, image for <keyword>"
+                         (ok (keywords/best keyword)))
+                    (GET "/all/" []
+                         :return s/Str
+                         :summary "returns all the keywords in the keyword-collection"
+                         (ok (json/generate-string (keywords/all))))
+                    (GET "/used/" []
+                         :return s/Str
+                         :summary "returns all keywords found in the image-collection"
+                         (ok (json/generate-string (keywords/used)))))
 
            (context "/preferences" []
                     :tags ["preferences"]
