@@ -27,21 +27,6 @@
   (context "/api" []
            :tags ["photos"]
 
-           (GET "/test-string" []
-                :return s/Str
-                :summary "just a test"
-                (ok (open/test-string)))
-
-           (GET "/preferences/:pref" [pref]
-                :return s/Str
-                :summary "returns preferences as stored in the db"
-                (ok (preference db "preferences" pref)))
-
-           (GET "/preferences/set/:pref/:value" [pref value]
-                :return s/Str
-                :summary "sets a preference in the database"
-                (ok (str (preference! db "preferences" pref value))))
-
            (GET "/projects" []
                 :return s/Str
                 :summary "returns all projects"
@@ -52,18 +37,37 @@
                 :summary "returns all picture details for a given project."
                 (ok (json/generate-string (project-images db "images" yr mo pr))))
 
-           (GET "/build/json/:divecentre/:filename/:filelist" [divecentre filename filelist]
-                :return s/Str
-                :summary "creates a JSON file containing the pics in filelist."
-                (ok (build/build-json divecentre filename filelist)))
 
-           (GET "/open/:size/:filelist" [size filelist]
-                ;; size is ignored for now, always opens medium
-                :return s/Str
-                :summary "Opens a list of files in an external viewer."
-                (ok (open/open-files size filelist)))
 
-           (GET "/open/project/:yr/:mo/:pr" [yr mo pr]
-                :return s/Str
-                :summary "Open a project in external program as specified in options db"
-                (ok (open/open-project yr mo pr)))))
+           (context "/preferences" []
+                    :tags ["preferences"]
+                    (GET "/:pref" [pref]
+                         :return s/Str
+                         :summary "returns preferences as stored in the db"
+                         (ok (preference db "preferences" pref)))
+
+                    (GET "/set/:pref/:value" [pref value]
+                         :return s/Str
+                         :summary "sets a preference in the database"
+                         (ok (str (preference! db "preferences" pref value)))) )
+
+           (context "/open" []
+                    :tags ["open"]
+
+                    (GET "/:size/:filelist" [size filelist]
+                         ;; size is ignored for now, always opens medium
+                         :return s/Str
+                         :summary "Opens a list of files in an external viewer."
+                         (ok (open/open-files size filelist)))
+
+                    (GET "/project/:yr/:mo/:pr" [yr mo pr]
+                         :return s/Str
+                         :summary "Open a project in external program."
+                         (ok (open/open-project yr mo pr))))
+
+           (context "/build" []
+                    :tags ["build"]
+                    (GET "/json/:divecentre/:filename/:filelist" [divecentre filename filelist]
+                         :return s/Str
+                         :summary "creates a JSON file containing the pics in filelist."
+                         (ok (build/build-json divecentre filename filelist))))))

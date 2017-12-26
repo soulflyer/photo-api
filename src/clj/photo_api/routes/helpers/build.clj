@@ -20,6 +20,7 @@
       ;; TODO replace this shell script with clojure code
       (sh "sh" "-c" (str "/Users/iain/bin/build-json -l " flist
                          " -d " divecentre
-                         " > " fn ))
+                         " > " fn
+                         "2> /dev/null"))
       (doall (map #(zipfile zipname (str ldir "/" %)) files))
       (str "created JSON file " filename " for " divecentre))))
