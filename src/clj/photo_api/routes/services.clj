@@ -12,7 +12,6 @@
                                         project-paths]]
             [image-lib.preferences :refer [preference
                                            preference!]]
-            [image-lib.core        :refer [add-keyword-to-photo]]
             [photo-api.routes.helpers.open     :as open]
             [photo-api.routes.helpers.build    :as build]
             [photo-api.routes.helpers.keywords :as keywords]
@@ -43,10 +42,15 @@
 
     (context "/photos" []
       :tags ["photos"]
-      (GET "/add/keyword/:keyword/:photo" [keyword photo]
-        :return s/Str
-        :summary "adds a new keyword to a photo"
-        (ok (photos/add-keyword keyword photo))))
+      (context "/add/keyword" []
+          (GET "/:keyword/:photos" [keyword photos]
+            :return s/Str
+            :summary "adds a new keyword to some photos"
+            (ok (photos/add-keyword keyword photos)))
+          (GET "/:keyword/:year/:month/:project/:photo" [keyword year month project photo]
+            :return s/Str
+            :summary "adds a keyword to a specified photo"
+            (ok (photos/add-keyword keyword year month project photo)))))
 
     (context "/keywords" []
       :tags ["keywords"]
