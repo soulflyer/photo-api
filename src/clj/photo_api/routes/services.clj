@@ -15,7 +15,8 @@
             [photo-api.routes.helpers.open     :as open]
             [photo-api.routes.helpers.build    :as build]
             [photo-api.routes.helpers.keywords :as keywords]
-            [photo-api.routes.helpers.photos   :as photos]))
+            [photo-api.routes.helpers.photos   :as photos]
+            [photo-api.routes.helpers.projects :as projects]))
 
 (defapi service-routes
   {:swagger {:ui "/swagger-ui"
@@ -37,8 +38,12 @@
       :tags ["projects"]
       (GET "/:yr/:mo/:pr" [yr mo pr]
         :return s/Str
-        :summary "returns all picture details for a given project."
-        (ok (json/generate-string (project-images db/db "images" yr mo pr)))))
+        :summary "returns all picture details for a project."
+        (ok (json/generate-string (project-images db/db "images" yr mo pr))))
+      (GET "/maps" []
+        :return s/Str
+        :summary "returns a JSON may of the projects tree"
+        (ok (json/generate-string (projects/project-map (all-projects db/db "images"))))))
 
     (context "/photos" []
       :tags ["photos"]

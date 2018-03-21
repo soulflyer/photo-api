@@ -1,4 +1,4 @@
-(defproject photo-api "0.1.0-SNAPSHOT"
+(defproject photo-api "0.1.1-SNAPSHOT"
 
   :description "API for geting data from photos db"
   :url "http://soulflyer.com"
