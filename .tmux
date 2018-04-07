@@ -32,6 +32,6 @@ $TME send-keys -t :$LABEL.2 'ec .' C-m
 # Put the cursor in pane 2 (the top right pane, running emacs client)
 $TME select-pane -t 2
 # *************************************************************************************
-tmux send-keys -t :$LABEL.2 M-x 'cider-jack-in' C-m
-sleep 90
-tmux send-keys -t :$LABEL.2 '(mount/start)'
+# tmux send-keys -t :$LABEL.2 M-x 'cider-jack-in' C-m
+# sleep 90
+# tmux send-keys -t :$LABEL.2 '(mount/start)'

@@ -4,7 +4,6 @@
   :url "http://soulflyer.com"
 
   :dependencies [[cheshire "5.8.0"]
-                 [cider/cider-nrepl "0.14.0"]
                  [clj-time "0.13.0"]
                  [com.google.guava/guava "20.0"]
                  [com.novemberain/monger "3.1.0" :exclusions [com.google.guava/guava]]
@@ -67,8 +66,7 @@
                                  [org.apache.httpcomponents/httpcore "4.4"]
                                  [org.clojure/core.cache "0.6.3"]
                                  [org.seleniumhq.selenium/selenium-server "2.48.2"]]
-                  :plugins      [[com.jakemccrary/lein-test-refresh "0.19.0"]
-                                 [refactor-nrepl "2.3.0-SNAPSHOT"]]
+                  :plugins      [[com.jakemccrary/lein-test-refresh "0.19.0"]]
                   :source-paths ["env/dev/clj"]
                   :resource-paths ["env/dev/resources"]
                   :repl-options {:init-ns user}
