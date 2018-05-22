@@ -12,6 +12,7 @@
                                         project-paths]]
             [image-lib.preferences :refer [preference
                                            preference!]]
+            [image-lib.images :as images]
             [photo-api.routes.helpers.open     :as open]
             [photo-api.routes.helpers.build    :as build]
             [photo-api.routes.helpers.keywords :as keywords]
@@ -48,14 +49,26 @@
     (context "/photos" []
       :tags ["photos"]
       (context "/add/keyword" []
-          (GET "/:keyword/:photos" [keyword photos]
-            :return s/Str
-            :summary "adds a new keyword to some photos"
-            (ok (photos/add-keyword keyword photos)))
-          (GET "/:keyword/:year/:month/:project/:photo" [keyword year month project photo]
-            :return s/Str
-            :summary "adds a keyword to a specified photo"
-            (ok (photos/add-keyword keyword year month project photo)))))
+        (GET "/:keyword/:photos" [keyword photos]
+          :return s/Str
+          :summary "adds a new keyword to some photos"
+          (ok (photos/add-keyword keyword photos)))
+        (GET "/:keyword/:year/:month/:project/:photo" [keyword year month project photo]
+          :return s/Str
+          :summary "adds a keyword to a specified photo"
+          (ok (photos/add-keyword keyword year month project photo))))
+      (GET "/:year/:month/:project" [year month project]
+        :return s/Str
+        :summary "returns all picture details for a project."
+        (ok (json/generate-string (images/images db/db "images" year month project))))
+      (GET "/:year/:month" [year month]
+        :return s/Str
+        :summary "returns all picture details for a month."
+        (ok (json/generate-string (images/images db/db "images" year month))))
+      (GET "/:year" [year]
+        :return s/Str
+        :summary "returns all picture details for a year."
+        (ok (json/generate-string (images/images db/db "images" year)))))
 
     (context "/keywords" []
       :tags ["keywords"]

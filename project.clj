@@ -4,7 +4,7 @@
   :url "http://soulflyer.com"
 
   :dependencies [[cheshire "5.8.0"]
-                 [cider/cider-nrepl "0.16.0"]
+                 ;;                 [cider/cider-nrepl "0.16.0"]
                  [clj-time "0.14.3"]
                  [com.google.guava/guava "23.0"]
                  [com.novemberain/monger "3.1.0" :exclusions [com.google.guava/guava]]
