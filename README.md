@@ -1,35 +1,31 @@
 # photo-api
 
-generated using Luminus version "2.9.11.62"
 
-Provide system and database access for photo processing tasks. Used by the photo-front-end clojurescript app.
+Photo-API provides system and database access for photo processing tasks. Used by the hinh-anh clojurescript app.
+
+## Installation
+First install mongo. Currently this is the only database that works with photo-api. Although mongo and nosql seem to be falling out of favour due to some issues with possible data loss this particular use case hits none of the problems and mongo accessed via the monger library  remains the best fit by far. [Get mongo  here](https://docs.mongodb.com/manual/administration/install-community/)
 
 ## Running
 
-### Production
-For routine use the server is started by running the uberjar with the command:
+The server is started by running the uberjar with the command:
+
     java -Ddatabase-url="mongodb://127.0.0.1/photos" -jar ~/Code/Clojure/Luminus/photo-api/target/uberjar/photo-api.jar >> /tmp/mongo-log &
+    
 This starts the server on port 31001.
+
 ### Development
-For development use, switch the client to port 31000 and fire up a clojure repl using M-x cider-jack-in and run (mount/start)
+For development use, I switch the client to port 31000 and fire up a clojure repl using M-x cider-jack-in and run (mount/start)
  
 ## API Details
 
-Still in development so checkout the API docs page on http://localhost:31001/swagger-ui/index.html for the most recent details.
+To see the full API, start the server and view the API docs page on <http://localhost:31001/swagger-ui/index.html>
 
-### api/projects
+## TODO
+All calls to the API are currently implemented using GET. This needs to be switched over to PUT for the calls that actually change the database or cause external actions. Currently there are no actions that would cause a real problem by being repeated, but its not cool.
 
-Gives a list of all photo projects.
-
-### api/open/project/yyyy/mm/project
-
-Open the specified project in the external viewer specified in the preferences table in the db.
-
-### api/project/yyyy/mm/project
-
-Return a list of all the pictures in the given project.
-
+Also the parameter order is not consistent across all the calls.
 
 ## License
 
-Copyright © 2017 FIXME
+Copyright © 2017 Iain Wood
