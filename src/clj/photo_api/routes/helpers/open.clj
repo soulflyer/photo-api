@@ -22,7 +22,7 @@
   (let [viewer (db/external-viewer db/db db/preference-collection)
         path   (db/medium-dir db/db db/preference-collection)
         files  (str/split (url-decode filelist) #" ")
-        paths  (str/join " " (map #(str path "/" %) files))]
+        paths  (str/join " " (map #(str path "/" % ".jpg") files))]
     (do
       (sh "sh" "-c" (str viewer " " paths))
       (str "Opening " paths))))

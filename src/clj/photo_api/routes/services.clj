@@ -144,7 +144,7 @@
       (GET "/:size/:filelist" [size filelist]
         ;; size is ignored for now, always opens medium
         :return s/Str
-        :summary "Opens a list of files in an external viewer."
+        :summary "Opens a list (space separated url-encoded) of files in an external viewer. ie 2015/03/01-1000-Dives/DIW_1686_ 2015/03/01-1000-Dives/DIW_1689"
         (ok (open/open-files size filelist)))
 
       (GET "/project/:yr/:mo/:pr" [yr mo pr]
