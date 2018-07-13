@@ -21,7 +21,7 @@
              :spec "/swagger.json"
              :data
              {:info
-              {:version "1.0.0"
+              {:version "1.0.1"
                :title "Photos Development API"
                :description "Access a mongo database containing details of photos"}}}}
 
@@ -40,7 +40,7 @@
         (ok (json/generate-string (ilpr/project-images db/db "images" yr mo pr))))
       (GET "/maps" []
         :return s/Str
-        :summary "returns a JSON may of the projects tree"
+        :summary "returns a JSON map of the projects tree"
         (ok (json/generate-string (projects/project-map (ilpr/all-projects db/db "images"))))))
 
     (context "/photos" []
@@ -124,18 +124,22 @@
       (GET "/used/" []
         :return s/Str
         :summary "returns all keywords found in the image-collection"
-        (ok (json/generate-string (keywords/used)))))
+        (ok (json/generate-string (keywords/used))))
+      (GET "/map/" []
+        :return s/Str
+        :summary "returns a nested map of all the keywords"
+        (ok (json/generate-string (keywords/dictionary "Bodyparts")))))
 
     (context "/preferences" []
       :tags ["preferences"]
       (GET "/:pref" [pref]
         :return s/Str
-        :summary "returns preferences as stored in the db"
+        :summary "DEPRECATED, prefs stored in local file storage now."
         (ok (ilpf/preference db/db "preferences" pref)))
       ;; TODO convert these to POST
       (GET "/set/:pref/:value" [pref value]
         :return s/Str
-        :summary "sets a preference in the database"
+        :summary "DEPRECATED, prefs stored in local storage now."
         (ok (str (ilpf/preference! db/db "preferences" pref value)))) )
 
     (context "/open" []

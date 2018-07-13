@@ -25,3 +25,13 @@
 
 (defn used []
   (ilc/used-keywords db/db db/image-collection))
+
+(defn dictionary [root]
+  (let [keyword-map (keyword root)
+        sample      (get keyword-map :sample)
+        children    (get keyword-map :sub)]
+    (reduce into {} [{:name root}
+                     (if sample {:sample sample})
+                     (if (< 0 (count children))
+                       {:children (vec (for [child (:sub keyword-map)]
+                                         (dictionary child)))})])))
