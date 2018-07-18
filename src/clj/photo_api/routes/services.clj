@@ -122,6 +122,10 @@
         :return s/Str
         :summary "returns the selected, or best, image for <keyword>"
         (ok (keywords/best keyword)))
+      (GET "/:keyword/best/map" [keyword]
+        :return s/Str
+        :summary "returns a map representing the selected, or best image for <keyword>"
+        (ok (json/generate-string (keywords/best-map keyword))))
       (GET "/all/" []
         :return s/Str
         :summary "returns all the keywords in the keyword-collection"
