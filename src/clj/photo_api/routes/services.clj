@@ -85,6 +85,11 @@
           :return s/Str
           :summary "deletes a keyword from some photos"
           (ok (photos/delete-keyword-from-photos kw photos))))
+      (GET "/:year/:month/:project/:version" [year month project version]
+        :return s/Str
+        :summary "returns the details for a picture."
+        (ok (json/generate-string
+              (ilim/find-image db/db "images" (str year month project version)))))
       (GET "/:year/:month/:project" [year month project]
         :return s/Str
         :summary "returns all picture details for a project."
@@ -128,7 +133,7 @@
       (GET "/map/" []
         :return s/Str
         :summary "returns a nested map of all the keywords"
-        (ok (json/generate-string (keywords/dictionary "Bodyparts")))))
+        (ok (json/generate-string (keywords/dictionary "Root")))))
 
     (context "/preferences" []
       :tags ["preferences"]
