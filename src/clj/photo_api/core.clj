@@ -3,7 +3,10 @@
             [luminus.repl-server :as repl]
             [luminus.http-server :as http]
             [photo-api.config :refer [env]]
+
+            ;; Comment out this to run lein uberjar
             [cider.nrepl :refer [cider-nrepl-handler]]
+
             [clojure.tools.cli :refer [parse-opts]]
             [clojure.tools.logging :as log]
             [mount.core :as mount])
@@ -23,6 +26,7 @@
   :stop
   (http/stop http-server))
 
+;; Comment out this to run lein uberjar
 (mount/defstate ^{:on-reload :noop} repl-server
   :start
   (when-let [nrepl-port (env :nrepl-port)]
@@ -30,7 +34,6 @@
   :stop
   (when repl-server
     (repl/stop repl-server)))
-
 
 (defn stop-app []
   (doseq [component (:stopped (mount/stop))]

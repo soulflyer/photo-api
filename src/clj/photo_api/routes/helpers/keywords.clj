@@ -27,10 +27,11 @@
       path-id)))
 
 (defn best [kw]
-  (let [sel  (:sample (ilk/find-keyword db/db db/keyword-collection kw))
-        best (ilh/image-path (ilc/best-sub-image db/db db/image-collection
-                                                 db/keyword-collection kw))]
-    (or sel best)))
+  (or (:sample (ilk/find-keyword db/db db/keyword-collection kw))
+      (ilh/image-path (ilc/best-sub-image
+                        db/db
+                        db/image-collection
+                        db/keyword-collection kw))))
 
 (defn best-map [kw]
   (let [best-path (best kw)
