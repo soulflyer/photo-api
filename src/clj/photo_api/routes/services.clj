@@ -22,6 +22,9 @@
              :data
              {:info
               {:version "1.0.1"
+               ;; Switch to correct title before lein uberjar
+               ;; TODO Automate this so swagger page always shows dev or prod version
+               ;;:title "Photo API"
                :title "Photos Development API"
                :description "Access a mongo database containing details of photos"}}}}
 
@@ -45,6 +48,30 @@
 
     (context "/photos" []
       :tags ["photos"]
+      (context "/keyword" []
+        (GET "/:keyword"
+            [keyword]
+          :return s/Str
+          :summary "returns all the photos containing <keyword>"
+          (ok
+            (json/generate-string
+              (ilim/find-images
+                db/db
+                db/image-collection
+                :Keywords
+                keyword))))
+        (GET "/all/:keyword"
+            [keyword]
+          :return s/Str
+          :summary "returns all the photos containing <keyword>"
+          (ok
+            (json/generate-string
+              (ilim/find-all-images
+                db/db
+                db/image-collection
+                db/keyword-collection
+                keyword)))))
+
       (context "/write" []
         ;; TODO make this write to the db and create more similar endpoints for caption etc
         (GET "/title/:year/:month/:project/:photo/:title"
@@ -76,6 +103,7 @@
           :return s/Str
           :summary "adds a keyword to a specified photo"
           (ok (photos/add-keyword keyword year month project photo))))
+
       (context "/delete/keyword" []
         (GET "/:kw/:year/:month/:project/:photo" [kw year month project photo]
           :return s/Str
@@ -85,6 +113,7 @@
           :return s/Str
           :summary "deletes a keyword from some photos"
           (ok (photos/delete-keyword-from-photos kw photos))))
+
       (GET "/:year/:month/:project/:version" [year month project version]
         :return s/Str
         :summary "returns the details for a picture."
@@ -153,13 +182,11 @@
 
     (context "/open" []
       :tags ["open"]
-
       (GET "/:size/:filelist" [size filelist]
         ;; size is ignored for now, always opens medium
         :return s/Str
         :summary "Opens a list (space separated url-encoded) of files in an external viewer. ie 2015/03/01-1000-Dives/DIW_1686_ 2015/03/01-1000-Dives/DIW_1689"
         (ok (open/open-files size filelist)))
-
       (GET "/project/:yr/:mo/:pr" [yr mo pr]
         :return s/Str
         :summary "Open a project in external program."
