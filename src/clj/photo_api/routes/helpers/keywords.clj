@@ -13,7 +13,31 @@
   (ilk/find-sub-keywords db/db db/keyword-collection kw))
 
 (defn add! [parent keyword]
-  (ilk/add-keyword db/db db/keyword-collection keyword parent))
+  (ilk/add-keyword db/db db/keyword-collection keyword parent)
+  (str "Added " keyword " to " parent))
+
+(defn delete! [kw]
+  (ilc/remove-keyword-from-photos db/db db/image-collection kw)
+  (ilk/safe-delete-keyword db/db db/keyword-collection kw)
+  (str "Deleted " kw " from db and photos."))
+
+(defn move! [kw old-parent new-parent]
+  (ilk/move-keyword db/db db/keyword-collection kw old-parent new-parent)
+  (str "Moved " kw " from " old-parent " to " new-parent))
+
+(defn rename! [old new]
+  (ilc/rename-keyword db/db
+                      db/keyword-collection
+                      db/image-collection
+                      old new)
+  (str "Renamed " old " to " new))
+
+(defn merge! [dispose keep]
+  (ilc/merge-keyword db/db
+                     db/keyword-collection
+                     db/image-collection
+                     dispose keep)
+  (str "merged " dispose " into " keep))
 
 (defn path->id
   "remove all the / characters and any suffix (.jpg)"
@@ -43,6 +67,20 @@
 
 (defn used []
   (ilc/used-keywords db/db db/image-collection))
+
+(defn unused []
+  (ilc/unused-keywords db/db db/image-collection db/keyword-collection))
+
+(defn delete-unused! []
+  (map delete! (unused) ))
+
+
+(defn add-missing! []
+  (ilc/add-missing-keywords
+    db/db
+    db/image-collection
+    db/keyword-collection)
+  (str "Added missing keywords."))
 
 (defn dictionary [root]
   (let [keyword-map (keyword root)

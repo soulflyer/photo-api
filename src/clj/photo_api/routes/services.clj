@@ -49,8 +49,7 @@
     (context "/photos" []
       :tags ["photos"]
       (context "/keyword" []
-        (GET "/:keyword"
-            [keyword]
+        (GET "/:keyword" [keyword]
           :return s/Str
           :summary "returns all the photos containing <keyword>"
           (ok
@@ -60,10 +59,9 @@
                 db/image-collection
                 :Keywords
                 keyword))))
-        (GET "/all/:keyword"
-            [keyword]
+        (GET "/all/:keyword" [keyword]
           :return s/Str
-          :summary "returns all the photos containing <keyword>"
+          :summary "returns all the photos containing <keyword> and children of <keyword>"
           (ok
             (json/generate-string
               (ilim/find-all-images
@@ -147,6 +145,26 @@
         :return s/Str
         :summary "adds <keyword> as child of <parent>"
         (ok (str (keywords/add! parent keyword))))
+      (GET "/delete/:keyword" [keyword]
+        :return s/Str
+        :summary "deletes a keyword, but only if it has no children"
+        (ok (str (keywords/delete! keyword))))
+      (GET "/move/:keyword/:old-parent/:new-parent" [keyword old-parent new-parent]
+        :return s/Str
+        :summary "Moves a keyword from old-parent to new-parent"
+        (ok (str (keywords/move! keyword old-parent new-parent))))
+      (GET "/rename/:old-name/:new-name" [old-name new-name]
+        :return s/Str
+        :summary "Renames a keyword in the db and in all pictures"
+        (ok (str (keywords/rename! old-name new-name))))
+      (GET "/merge/:keep/:dispose" [kw-keep kw-dispose]
+        :return s/Str
+        :summary "merges 2 keywords, keeping the second"
+        (ok (str (keywords/merge! kw-dispose kw-keep))))
+      (GET "/add/missing/" []
+        :return s/Str
+        :summary "Adds any keywords found in photos but not in already in the db"
+        (ok (keywords/add-missing!)))
       (GET "/:keyword/best" [keyword]
         :return s/Str
         :summary "returns the selected, or best, image for <keyword>"
@@ -163,6 +181,14 @@
         :return s/Str
         :summary "returns all keywords found in the image-collection"
         (ok (json/generate-string (keywords/used))))
+      (GET "/unused/" []
+        :return s/Str
+        :summary "Returns a list of keywords that are in the db but not in any photos"
+        (ok (json/generate-string (keywords/unused))))
+      (GET "/delete/unused/" []
+        :return s/Str
+        :summary "CAUTION! Deletes all the keywords that are not in any photos."
+        (ok (keywords/delete-unused!)))
       (GET "/map/" []
         :return s/Str
         :summary "returns a nested map of all the keywords"
@@ -172,12 +198,12 @@
       :tags ["preferences"]
       (GET "/:pref" [pref]
         :return s/Str
-        :summary "DEPRECATED, prefs stored in local file storage now."
+        :summary "Get a stored preference."
         (ok (ilpf/preference db/db "preferences" pref)))
       ;; TODO convert these to POST
       (GET "/set/:pref/:value" [pref value]
         :return s/Str
-        :summary "DEPRECATED, prefs stored in local storage now."
+        :summary "Set a preference."
         (ok (str (ilpf/preference! db/db "preferences" pref value)))) )
 
     (context "/open" []
