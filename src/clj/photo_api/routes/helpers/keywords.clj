@@ -37,7 +37,7 @@
                      db/keyword-collection
                      db/image-collection
                      dispose keep)
-  (str "merged " dispose " into " keep))
+  (str "Merged " dispose " into " keep))
 
 (defn path->id
   "remove all the / characters and any suffix (.jpg)"
@@ -73,7 +73,6 @@
 
 (defn delete-unused! []
   (map delete! (unused) ))
-
 
 (defn add-missing! []
   (ilc/add-missing-keywords

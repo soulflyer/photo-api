@@ -157,10 +157,10 @@
         :return s/Str
         :summary "Renames a keyword in the db and in all pictures"
         (ok (str (keywords/rename! old-name new-name))))
-      (GET "/merge/:keep/:dispose" [kw-keep kw-dispose]
+      (GET "/merge/:dispose/:keep" [dispose keep]
         :return s/Str
         :summary "merges 2 keywords, keeping the second"
-        (ok (str (keywords/merge! kw-dispose kw-keep))))
+        (ok (str (keywords/merge! dispose keep))))
       (GET "/add/missing/" []
         :return s/Str
         :summary "Adds any keywords found in photos but not in already in the db"
