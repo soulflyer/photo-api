@@ -90,3 +90,7 @@
                      (if (< 0 (count children))
                        {:children (vec (for [child (:sub keyword-map)]
                                          (dictionary child)))})])))
+
+(defn add-sample! [kw sample]
+  (ilk/add-sample db/db db/keyword-collection kw sample)
+  (str "Adding " sample " to " kw))

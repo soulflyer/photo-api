@@ -6,6 +6,7 @@
             [image-lib.projects                :as ilpr]
             [image-lib.write                   :as ilwr]
             [photo-api.db.core                 :as db]
+            [photo-api.config                  :refer [env]]
             [photo-api.routes.helpers.build    :as build]
             [photo-api.routes.helpers.keywords :as keywords]
             [photo-api.routes.helpers.open     :as open]
@@ -24,8 +25,8 @@
               {:version "1.0.1"
                ;; Switch to correct title before lein uberjar
                ;; TODO Automate this so swagger page always shows dev or prod version
-               ;;:title "Photo API"
-               :title "Photos Development API"
+               :title "Photo API"
+               ;;:title (:title env)
                :description "Access a mongo database containing details of photos"}}}}
 
   (context "/api" []
@@ -192,7 +193,11 @@
       (GET "/map/" []
         :return s/Str
         :summary "returns a nested map of all the keywords"
-        (ok (json/generate-string (keywords/dictionary "Root")))))
+        (ok (json/generate-string (keywords/dictionary "Root"))))
+      (GET "/:kw/sample/:sample" [kw sample]
+        :return s/Str
+        :summary "Adds a sample picture to a keyword"
+        (ok (keywords/add-sample! kw sample))))
 
     (context "/preferences" []
       :tags ["preferences"]

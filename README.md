@@ -16,7 +16,13 @@ This starts the server on port 31001.
 
 ### Development
 For development use, I switch the client to port 31000 and fire up a clojure repl using M-x cider-jack-in and run (mount/start)
- 
+
+### Building
+
+    lein uberjar
+
+Should alter the title in the swagger configuration to make it easy to differentiate the development version from the production version.
+
 ## API Details
 
 To see the full API, start the server and view the API docs page on <http://localhost:31001/swagger-ui/index.html>

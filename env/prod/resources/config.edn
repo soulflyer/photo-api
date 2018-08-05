@@ -1,2 +1,3 @@
-{:production true
+{:title "Photos API"
+ :production true
  :port 31001}

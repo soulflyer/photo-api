@@ -1,12 +1,8 @@
 (ns photo-api.core
   (:require [photo-api.handler :as handler]
-            [luminus.repl-server :as repl]
+            [photo-api.nrepl   :as nrepl]
             [luminus.http-server :as http]
             [photo-api.config :refer [env]]
-
-            ;; Comment out this to run lein uberjar
-            [cider.nrepl :refer [cider-nrepl-handler]]
-
             [clojure.tools.cli :refer [parse-opts]]
             [clojure.tools.logging :as log]
             [mount.core :as mount])
@@ -26,14 +22,14 @@
   :stop
   (http/stop http-server))
 
-;; Comment out this to run lein uberjar
 (mount/defstate ^{:on-reload :noop} repl-server
   :start
-  (when-let [nrepl-port (env :nrepl-port)]
-    (repl/start {:port nrepl-port :handler cider-nrepl-handler}))
+  (when (env :nrepl-port)
+    (nrepl/start {:bind (env :nrepl-bind)
+                  :port (env :nrepl-port)}))
   :stop
   (when repl-server
-    (repl/stop repl-server)))
+    (nrepl/stop repl-server)))
 
 (defn stop-app []
   (doseq [component (:stopped (mount/stop))]

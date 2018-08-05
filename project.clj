@@ -19,19 +19,20 @@
                  [metosin/muuntaja "0.5.0"]
                  [metosin/ring-http-response "0.9.0"]
                  [mount "0.1.12"]
+                 [nrepl "0.4.4"]
                  [org.clojure/clojure "1.9.0"]
                  [org.clojure/tools.cli "0.3.7"]
                  [org.clojure/tools.logging "0.4.1"]
                  [org.clojure/data.json "0.2.6"]
                  [org.webjars.bower/tether "1.4.4"]
-                 [org.webjars/bootstrap "4.1.1"]
-                 [org.webjars/font-awesome "5.0.13"]
+                 [org.webjars/bootstrap "4.1.3"]
+                 [org.webjars/font-awesome "5.2.0"]
                  [org.webjars/jquery "3.3.1-1"]
                  [ring-webjars "0.2.0"]
                  [ring/ring-codec "1.1.1"]
                  [ring/ring-core "1.6.3"]
                  [ring/ring-defaults "0.3.2"]
-                 [selmer "1.11.7"]
+                 [selmer "1.11.8"]
                  [image-lib "0.2.2-SNAPSHOT"]]
 
   :min-lein-version "2.0.0"
@@ -50,7 +51,8 @@
 
 
   :profiles
-  {:uberjar {:omit-source true
+  {:repl {:plugins [[cider/cider-nrepl "0.17.0"]]}
+   :uberjar {:omit-source true
              :aot :all
              :uberjar-name "photo-api.jar"
              :source-paths ["env/prod/clj"]
@@ -64,9 +66,9 @@
                                  [ring/ring-devel "1.6.3"]
                                  [pjstadig/humane-test-output "0.8.3"]
                                  [clj-webdriver/clj-webdriver "0.7.2"]
-                                 [org.apache.httpcomponents/httpcore "4.4.9"]
+                                 [org.apache.httpcomponents/httpcore "4.4.10"]
                                  [org.clojure/core.cache "0.7.1"]
-                                 [org.seleniumhq.selenium/selenium-server "3.12.0"]]
+                                 [org.seleniumhq.selenium/selenium-server "3.14.0"]]
                   :plugins      [[com.jakemccrary/lein-test-refresh "0.19.0"]]
                   :source-paths ["env/dev/clj"]
                   :resource-paths ["env/dev/resources"]
