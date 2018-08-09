@@ -25,8 +25,8 @@
               {:version "1.0.1"
                ;; Switch to correct title before lein uberjar
                ;; TODO Automate this so swagger page always shows dev or prod version
-               :title "Photo API"
-               ;;:title (:title env)
+               :title "Photo Development API"
+               ;;:title (@env :title)
                :description "Access a mongo database containing details of photos"}}}}
 
   (context "/api" []

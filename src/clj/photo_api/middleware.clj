@@ -1,19 +1,19 @@
 (ns photo-api.middleware
-  (:require [photo-api.env :refer [defaults]]
-            [cheshire.generate :as cheshire]
-            [cognitect.transit :as transit]
-            [clojure.tools.logging :as log]
-            [photo-api.layout :refer [*app-context* error-page]]
+  (:require [cheshire.generate            :as cheshire]
+            [clojure.tools.logging        :as log]
+            [cognitect.transit            :as transit]
+            [immutant.web.middleware      :refer [wrap-session]]
+            [muuntaja.core                :as muuntaja]
+            [muuntaja.format.json         :refer [json-format]]
+            [muuntaja.format.transit      :as transit-format]
+            [muuntaja.middleware          :refer [wrap-format wrap-params]]
+            [photo-api.config             :refer [env]]
+            [photo-api.env                :refer [defaults]]
+            [photo-api.layout             :refer [*app-context* error-page]]
             [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
-            [ring.middleware.webjars :refer [wrap-webjars]]
-            [muuntaja.core :as muuntaja]
-            [muuntaja.format.json :refer [json-format]]
-            [muuntaja.format.transit :as transit-format]
-            [muuntaja.middleware :refer [wrap-format wrap-params]]
-            [photo-api.config :refer [env]]
-            [ring.middleware.flash :refer [wrap-flash]]
-            [immutant.web.middleware :refer [wrap-session]]
-            [ring.middleware.defaults :refer [site-defaults wrap-defaults]])
+            [ring.middleware.defaults     :refer [site-defaults wrap-defaults]]
+            [ring.middleware.flash        :refer [wrap-flash]]
+            [ring.middleware.webjars      :refer [wrap-webjars]])
   (:import [javax.servlet ServletContext]
            [org.joda.time ReadableInstant]))
 

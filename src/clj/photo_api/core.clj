@@ -1,11 +1,11 @@
 (ns photo-api.core
-  (:require [photo-api.handler :as handler]
-            [photo-api.nrepl   :as nrepl]
-            [luminus.http-server :as http]
-            [photo-api.config :refer [env]]
-            [clojure.tools.cli :refer [parse-opts]]
+  (:require [clojure.tools.cli     :refer [parse-opts]]
             [clojure.tools.logging :as log]
-            [mount.core :as mount])
+            [luminus.http-server   :as http]
+            [mount.core            :as mount]
+            [photo-api.config      :refer [env]]
+            [photo-api.handler     :as handler]
+            [photo-api.nrepl       :as nrepl])
   (:gen-class))
 
 (def cli-options
