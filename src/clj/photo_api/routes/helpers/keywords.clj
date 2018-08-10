@@ -50,12 +50,19 @@
       (subs path-id 0 index-dot)
       path-id)))
 
+(defn add-sample! [kw sample]
+  (ilk/add-sample db/db db/keyword-collection kw sample)
+  (str "Adding " sample " to " kw))
+
 (defn best [kw]
-  (or (:sample (ilk/find-keyword db/db db/keyword-collection kw))
-      (ilh/image-path (ilc/best-sub-image
-                        db/db
-                        db/image-collection
-                        db/keyword-collection kw))))
+  (let [kw-map (ilk/find-keyword db/db db/keyword-collection kw)]
+    (or (:sample kw-map)
+        (let [best-image (ilh/image-path (ilc/best-sub-image
+                                           db/db
+                                           db/image-collection
+                                           db/keyword-collection kw))]
+          (add-sample! kw best-image)
+          best-image))))
 
 (defn best-map [kw]
   (let [best-path (best kw)
@@ -90,7 +97,3 @@
                      (if (< 0 (count children))
                        {:children (vec (for [child (:sub keyword-map)]
                                          (dictionary child)))})])))
-
-(defn add-sample! [kw sample]
-  (ilk/add-sample db/db db/keyword-collection kw sample)
-  (str "Adding " sample " to " kw))
