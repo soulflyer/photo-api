@@ -19,7 +19,8 @@
 (defn delete! [kw]
   (ilc/remove-keyword-from-photos db/db db/image-collection kw)
   (ilk/safe-delete-keyword db/db db/keyword-collection kw)
-  (str "Deleted " kw " from db and photos."))
+  ;;(str "Deleted " kw " from db and photos.")
+  )
 
 (defn move! [kw old-parent new-parent]
   (ilk/move-keyword db/db db/keyword-collection kw old-parent new-parent)
@@ -79,12 +80,20 @@
   (ilc/unused-keywords db/db db/image-collection db/keyword-collection))
 
 (defn delete-unused! []
-  (map delete! (unused) ))
+  (str "Deleted "
+       (reduce #(str %1 ", " %2)
+               (filter
+                 ;;#(not= nil %)
+                 some?
+                 (map delete! (unused))))))
 
 (defn add-missing! []
   (ilc/add-missing-keywords
     db/db
     db/image-collection
+    db/keyword-collection)
+  (ilc/add-orphaned-keywords
+    db/db
     db/keyword-collection)
   (str "Added missing keywords."))
 
