@@ -70,6 +70,11 @@
         best-id   (path->id best-path)]
     (ili/find-image db/db db/image-collection best-id)))
 
+(defn all-best [kw]
+  (let [subs []
+        ]
+    ["hello" "world"]))
+
 (defn all []
   (ilk/all-keywords db/db db/keyword-collection))
 

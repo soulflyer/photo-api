@@ -141,6 +141,10 @@
         :return s/Str
         :summary "returns the sub keywords of <kw>"
         (ok (json/generate-string (keywords/children keyword))))
+      (GET "/:keyword/path" [keyword]
+        :return s/Str
+        :summary "returns the path to <keyword>"
+        (ok (str "Path to " keyword)))
       ;; TODO convert this to POST
       (GET "/add/:parent/:keyword" [parent keyword]
         :return s/Str
@@ -174,6 +178,10 @@
         :return s/Str
         :summary "returns a map representing the selected, or best image for <keyword>"
         (ok (json/generate-string (keywords/best-map keyword))))
+      (GET "/:keyword/best/all" [keyword]
+        :return s/Str
+        :summary "returns a list of the best image for a keyword and all sub keywords"
+        (ok (json/generate-string (keywords/all-best keyword))))
       (GET "/all/" []
         :return s/Str
         :summary "returns all the keywords in the keyword-collection"
