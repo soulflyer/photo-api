@@ -10,9 +10,6 @@
   (let [path (str (db/json-dir db/db db/preference-collection))
         ldir (str (db/large-dir db/db db/preference-collection))
         zdir (str (db/zip-dir db/db db/preference-collection))
-        fn (if (= \/ (first filename))
-             filename
-             (str path "/" filename))
         zipname (str zdir "/" filename ".zip")
         files (sort (str/split filelist #" "))
         flist (str/join " " files)]
@@ -21,7 +18,6 @@
           (str "/Users/iain/bin/build-json -l \"" flist "\""
                " -d \"" divecentre "\""
                " -z "
-               " -f " fn
-               " &> /tmp/build-json.log"))
-      ;;(doall (map #(zipfile zipname (str ldir "/" %)) files))
+               filename
+               " 2>> /tmp/build-json.log"))
       (str "created JSON file " filename " for " divecentre))))
