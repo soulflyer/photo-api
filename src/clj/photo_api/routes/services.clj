@@ -15,7 +15,8 @@
             [ring.util.codec                   :refer [url-decode]]
             [ring.util.http-response           :refer [ok]]
             [schema.core                       :as s]
-            [clojure.string                    :as str]))
+            [clojure.string                    :as str]
+            [image-lib.keywords :as ilk]))
 
 (defapi service-routes
   {:swagger {:ui "/swagger-ui"
@@ -25,7 +26,7 @@
               {:version "1.0.1"
                ;; Switch to correct title before lein uberjar
                ;; TODO Automate this so swagger page always shows dev or prod version
-               :title "Photo Development API"
+               :title "Photo API"
                ;;:title (@env :title)
                :description "Access a mongo database containing details of photos"}}}}
 
@@ -143,9 +144,8 @@
         (ok (json/generate-string (keywords/children keyword))))
       (GET "/:keyword/path" [keyword]
         :return s/Str
-        :summary "returns the path to <keyword>"
-        (ok (str "Path to " keyword)))
-      ;; TODO convert this to POST
+        :summary "returns the path to <keyword> as a vector"
+        (ok (str (json/generate-string (ilk/keyword-path db/db db/keyword-collection keyword)))))
       (GET "/add/:parent/:keyword" [parent keyword]
         :return s/Str
         :summary "adds <keyword> as child of <parent>"

@@ -18,6 +18,5 @@
           (str "/Users/iain/bin/build-json -l \"" flist "\""
                " -d \"" divecentre "\""
                " -z "
-               filename
-               " 2>> /tmp/build-json.log"))
+               filename))
       (str "created JSON file " filename " for " divecentre))))
