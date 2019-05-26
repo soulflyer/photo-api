@@ -109,5 +109,5 @@
     (reduce into {} [{:name root}
                      (if sample {:sample sample})
                      (if (< 0 (count children))
-                       {:children (vec (for [child (:sub keyword-map)]
+                       {:children (vec (for [child (sort (:sub keyword-map))]
                                          (dictionary child)))})])))

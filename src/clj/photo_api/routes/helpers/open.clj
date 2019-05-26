@@ -19,6 +19,7 @@
       (str "Opening " path))))
 
 (defn open-files [size filelist]
+  ;;TODO size is ignored and always opens medium
   (let [viewer (db/external-viewer db/db db/preference-collection)
         path   (db/medium-dir db/db db/preference-collection)
         files  (str/split (url-decode filelist) #" ")

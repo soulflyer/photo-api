@@ -19,7 +19,7 @@
                  [metosin/muuntaja "0.5.0"]
                  [metosin/ring-http-response "0.9.0"]
                  [mount "0.1.13"]
-                 [nrepl "0.4.5"]
+                 [nrepl "0.6.0"]
                  [org.clojure/clojure "1.9.0"]
                  [org.clojure/tools.cli "0.3.7"]
                  [org.clojure/tools.logging "0.4.1"]
@@ -51,7 +51,7 @@
 
 
   :profiles
-  {:repl {:plugins [[cider/cider-nrepl "0.17.0"]]}
+  {:repl {:plugins [[cider/cider-nrepl "0.21.0"]]}
    :uberjar {:omit-source true
              :aot :all
              :uberjar-name "photo-api.jar"
