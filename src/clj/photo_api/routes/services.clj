@@ -25,9 +25,10 @@
              {:info
               {:version "1.0.1"
                ;; Switch to correct title before lein uberjar
-               ;; TODO Automate this so swagger page always shows dev or prod version
+               ;; TODO Automate this so swagger page always shows dev or prod version. This may not be
+               ;; possible, it looks like the routes are defined before the env service is started.
                :title "Photo API"
-               ;;:title (@env :title)
+               ;; :title (:title env)
                :description "Access a mongo database containing details of photos"}}}}
 
   (context "/api" []

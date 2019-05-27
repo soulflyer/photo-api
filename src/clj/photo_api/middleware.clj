@@ -4,7 +4,7 @@
             [cognitect.transit            :as transit]
             [immutant.web.middleware      :refer [wrap-session]]
             [muuntaja.core                :as muuntaja]
-            [muuntaja.format.json         :refer [json-format]]
+            [muuntaja.format.json         :as json]
             [muuntaja.format.transit      :as transit-format]
             [muuntaja.middleware          :refer [wrap-format wrap-params]]
             [photo-api.config             :refer [env]]
@@ -67,11 +67,11 @@
     :formats
     merge
     {"application/json"
-     json-format
+     json/format
 
      "application/transit+json"
-     {:decoder [(partial transit-format/make-transit-decoder :json)]
-      :encoder [#(transit-format/make-transit-encoder
+     {:decoder [(partial transit-format/decoder :json)]
+      :encoder [#(transit-format/encoder
                    :json
                    (merge
                      %
