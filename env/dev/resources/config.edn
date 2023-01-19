@@ -2,4 +2,5 @@
  :dev true
  :port 31000
  ;; when :nrepl-port is set the application starts the nREPL server on load
- :nrepl-port 57251}
+ :nrepl-port 57251
+ :database-url "mongodb+srv://soulflyer:At-18thCenturyUnplugged@soulflyer.qri2f.mongodb.net/photos?retryWrites=true&w=majority"}

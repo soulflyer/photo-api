@@ -4,7 +4,7 @@
 Photo-API provides system and database access for photo processing tasks. Used by the hinh-anh clojurescript app.
 
 ## Installation
-First install mongo. Currently this is the only database that works with photo-api. Although mongo and nosql seem to be falling out of favour due to some issues with possible data loss this particular use case hits none of the problems and mongo accessed via the monger library  remains the best fit by far. [Get mongo  here](https://docs.mongodb.com/manual/administration/install-community/)
+First install mongo. Currently this is the only database that works with photo-api. Although mongo and nosql seem to be falling out of favour due to some issues with possible data loss this particular use case hits none of the problems and mongo accessed via the monger library  remains the best fit by far. [Get mongo here](https://docs.mongodb.com/manual/administration/install-community/)
 
 ## Running
 
@@ -31,7 +31,7 @@ Should alter the title in the swagger configuration to make it easy to different
 
 ## API Details
 
-To see the full API, start the server and view the API docs page on <http://localhost:31001/swagger-ui/index.html>
+To see the full API, start the server and view the API docs page on http://localhost:31001/swagger-ui/index.html
 
 ## TODO
 All calls to the API are currently implemented using GET. This needs to be switched over to PUT for the calls that actually change the database or cause external actions. Currently there are no actions that would cause a real problem by being repeated, but its not cool.
