@@ -17,7 +17,7 @@ or on the cloud server:
     java -Ddatabase-url="mongodb+srv://soulflyer:<password>@soulflyer.qri2f.mongodb.net/photos?retryWrites=true&w=majority" -jar ~/Code/Clojure/photo-api/target/uberjar/photo-api.jar >> /tmp/mongo-log &
     
 This starts the server on port 31001.
-The second one needs to have the correct password where it says <password>.
+The second one needs to have the correct password where it says \<password>.
 
 
 ### Development
