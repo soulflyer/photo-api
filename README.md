@@ -23,6 +23,10 @@ The second one needs to have the correct password where it says \<password>.
 ### Development
 For development use, I switch the client to port 31000 and fire up a clojure repl using M-x cider-jack-in and run (mount/start)
 
+Use a `.direnv` file, ignored by git, that contains an entry like this:
+```
+export DATABASE_URL="mongodb+srv://soulflyer:<secret-password>@soulflyer.qri2f.mongodb.net/photos?retryWrites=true&w=majority"
+```
 ### Building
 
     lein uberjar

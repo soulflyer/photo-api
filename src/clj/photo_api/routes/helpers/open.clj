@@ -4,26 +4,29 @@
             [clojure.java.shell :refer [sh]]
             [ring.util.codec :refer [url-decode]]))
 
-(defn test-string [] "hello world")
+(def viewer 
+  (if (sh "which" "open")
+    "open"
+    "xdg-open"))
 
 (defn open-project [yr mo pr]
   (let [path (str (db/medium-dir db/db db/preference-collection)
                   "/"
                   yr "/" mo "/" pr)
         files (str/split (:out (sh "ls" path)) #"\n")
-        paths (reduce #(str %1 " " %2) (map #(str path "/" %) files))
-        viewer (db/external-viewer db/db db/preference-collection)
-        command (str viewer " " paths)]
-    (do
-      (sh "xargs" viewer :in paths)
-      (str "Opening " path))))
+        paths (reduce #(str %1 " " %2) (map #(str path "/" %) files))]
+    (sh "xargs" viewer :in paths)
+    (str "Opening " paths " with " viewer ":")))
 
 (defn open-files [size filelist]
   ;;TODO size is ignored and always opens medium
-  (let [viewer (db/external-viewer db/db db/preference-collection)
-        path   (db/medium-dir db/db db/preference-collection)
+  (let [path    (db/medium-dir db/db db/preference-collection)
         files  (str/split (url-decode filelist) #" ")
         paths  (str/join " " (map #(str path "/" % ".jpg") files))]
-    (do
-      (sh "sh" "-c" (str viewer " " paths))
-      (str "Opening " paths))))
+    (sh "sh" "-c" (str viewer " " paths))
+    (str "Opening " paths)))
+
+(comment
+  (open-project 1991 11 "fire_and_ice" )
+  (open-files "medium" "1991/11/fire_and_ice/59470001 /1991/11/fire_and_ice/59470013")
+  )
