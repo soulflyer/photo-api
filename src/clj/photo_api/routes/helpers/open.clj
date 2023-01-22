@@ -18,7 +18,12 @@
     (sh "xargs" viewer :in paths)
     (str "Opening " paths " with " viewer ":")))
 
-(defn open-files [size filelist]
+(defn open-files
+  "Open a list of files provided as a single string of relative pathnames
+  ie \"1991/11/fire_and_ice/59470001  /1991/11/fire_and_ice/59470013\"
+  to open the 2 photos, 59470001 and 59470013 from the fire_and_ice project
+  from November 1991"
+  [size filelist]
   ;;TODO size is ignored and always opens medium
   (let [path    (db/medium-dir db/db db/preference-collection)
         files  (str/split (url-decode filelist) #" ")
