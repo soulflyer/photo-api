@@ -4,13 +4,16 @@
             [clojure.java.shell :refer [sh]]
             [ring.util.codec :refer [url-decode]]))
 
-(def viewer 
+;;(def viewer "open")
+
+(defn viewer []
   (if (sh "which" "open")
     "open"
     "xdg-open"))
 
 (defn open-project [yr mo pr]
-  (let [path (str (db/medium-dir db/db db/preference-collection)
+  (let [viewer (viewer)
+        path (str (db/medium-dir db/db db/preference-collection)
                   "/"
                   yr "/" mo "/" pr)
         files (str/split (:out (sh "ls" path)) #"\n")
@@ -25,11 +28,12 @@
   from November 1991"
   [size filelist]
   ;;TODO size is ignored and always opens medium
-  (let [path    (db/medium-dir db/db db/preference-collection)
+  (let [viewer (viewer)
+        path    (db/medium-dir db/db db/preference-collection)
         files  (str/split (url-decode filelist) #" ")
         paths  (str/join " " (map #(str path "/" % ".jpg") files))]
     (sh "sh" "-c" (str viewer " " paths))
-    (str "Opening " paths)))
+    (str "Opening " paths " with " viewer)))
 
 (comment
   (open-project 1991 11 "fire_and_ice" )

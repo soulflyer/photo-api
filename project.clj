@@ -3,20 +3,20 @@
   :description "API for geting data from photos db"
   :url "http://soulflyer.com"
 
-  :dependencies [[cheshire "5.8.1"]
+  :dependencies [[cheshire "5.8.1"] ; Json encoding
                  [clj-time "0.15.1"]
-                 [com.google.guava/guava "23.0"]
+                 [com.google.guava/guava "23.0"] ; Is this used?
                  [com.novemberain/monger "3.5.0" :exclusions [com.google.guava/guava]]
-                 [compojure "1.6.1"]
-                 [cprop "0.1.13"]
-                 [expectations "2.2.0-rc3"]
-                 [funcool/struct "1.3.0"]
+                 [compojure "1.6.1"] ; routing
+                 [cprop "0.1.13"] ; environmemnt
+                 [expectations "2.2.0-rc3"] ; unit testing
+                 [funcool/struct "1.3.0"] ; structural validation?
                  [luminus-immutant "0.2.5"]
                  [luminus-nrepl "0.1.6"]
                  [luminus/ring-ttl-session "0.3.3"]
                  [markdown-clj "1.10.0"]
                  [metosin/compojure-api "1.1.12"]
-                 [metosin/muuntaja "0.6.4"]
+                 [metosin/muuntaja "0.6.4"] ; http
                  [metosin/ring-http-response "0.9.1"]
                  [mount "0.1.16"]
                  [nrepl "0.6.0"]
@@ -24,15 +24,15 @@
                  [org.clojure/tools.cli "0.4.2"]
                  [org.clojure/tools.logging "0.5.0-alpha.1"]
                  [org.clojure/data.json "0.2.6"]
-                 [org.webjars.bower/tether "1.4.4"]
-                 [org.webjars/bootstrap "4.3.1"]
-                 [org.webjars/font-awesome "5.8.2"]
-                 [org.webjars/jquery "3.4.1"]
-                 [ring-webjars "0.2.0"]
-                 [ring/ring-codec "1.1.1"]
-                 [ring/ring-core "1.7.1"]
-                 [ring/ring-defaults "0.3.2"]
-                 [selmer "1.12.12"]
+                 [org.webjars.bower/tether "1.4.4"] ; Is this used?
+                 [org.webjars/bootstrap "4.3.1"] ; Is this used?
+                 [org.webjars/font-awesome "5.8.2"] ; Is this used?
+                 [org.webjars/jquery "3.4.1"] ; Is this used?
+                 [ring-webjars "0.2.0"] ; Is this used?
+                 [ring/ring-codec "1.1.1"] ; Is this used?
+                 [ring/ring-core "1.7.1"] ; Is this used?
+                 [ring/ring-defaults "0.3.2"] ; Is this used?
+                 [selmer "1.12.12"] ; layout for the html returned.
                  [image-lib "0.2.3-SNAPSHOT"]]
 
   :min-lein-version "2.0.0"
