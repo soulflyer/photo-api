@@ -4,8 +4,6 @@
             [clojure.java.shell :refer [sh]]
             [ring.util.codec :refer [url-decode]]))
 
-;;(def viewer "open")
-
 (defn viewer []
   (if (sh "which" "open")
     "open"

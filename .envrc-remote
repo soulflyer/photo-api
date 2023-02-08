@@ -1,1 +1,0 @@
-export DATABASE_URL="mongodb+srv://soulflyer:qmBlY9ptZtZdDD1Q@soulflyer.qri2f.mongodb.net/photos?retryWrites=true&w=majority"
