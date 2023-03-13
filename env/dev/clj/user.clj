@@ -11,3 +11,8 @@
 (defn restart []
   (stop)
   (start))
+
+(comment
+  (start)
+  (stop)
+  )

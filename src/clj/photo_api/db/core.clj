@@ -1,7 +1,7 @@
 (ns photo-api.db.core
   (:require [monger.core           :as mg]
-            [monger.collection     :as mc]
-            [monger.operators      :refer :all]
+;;          [monger.collection     :as mc]
+;;          [monger.operators      :refer :all]
             [mount.core            :refer [defstate]]
             [photo-api.config      :refer [env]]
             [image-lib.preferences :refer [preference]]))

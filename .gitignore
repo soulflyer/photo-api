@@ -12,6 +12,6 @@ profiles.clj
 /log
 figwheel_server.log
 .DS_Store
-/.clj-kondo
+/.clj-kondo/.cache
 /.envrc
 /.envrc*

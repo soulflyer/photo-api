@@ -1,22 +1,19 @@
 (ns photo-api.routes.services
   (:require [cheshire.core                     :as json]
-            [compojure.api.sweet               :refer :all]
+            [compojure.api.sweet               :refer [defapi context GET]]
             [image-lib.images                  :as ilim]
             [image-lib.preferences             :as ilpf]
             [image-lib.projects                :as ilpr]
             [image-lib.write                   :as ilwr]
             [photo-api.db.core                 :as db]
-            [photo-api.config                  :refer [env]]
             [photo-api.routes.helpers.build    :as build]
             [photo-api.routes.helpers.keywords :as keywords]
             [photo-api.routes.helpers.open     :as open]
             [photo-api.routes.helpers.photos   :as photos]
             [photo-api.routes.helpers.projects :as projects]
-            [ring.util.codec                   :refer [url-decode]]
             [ring.util.http-response           :refer [ok]]
             [schema.core                       :as s]
-            [clojure.string                    :as str]
-            [image-lib.keywords :as ilk]))
+            [image-lib.keywords                :as ilk]))
 
 (defapi service-routes
   {:swagger {:ui "/swagger-ui"
