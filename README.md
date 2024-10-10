@@ -10,7 +10,7 @@ First install mongo. Currently this is the only database that works with photo-a
 
 The server is started by running the uberjar with the command:
 
-    java -Ddatabase-url="mongodb://127.0.0.1/photos" -jar ~/Code/Clojure/Luminus/photo-api/target/uberjar/photo-api.jar >> /tmp/mongo-log &
+    java -Ddatabase-url="mongodb://127.0.0.1/photos" -jar ~/Code/Clojure/photo-api/target/uberjar/photo-api.jar >> /tmp/mongo-log &
 
 or on the cloud server:
 
@@ -19,6 +19,7 @@ or on the cloud server:
 This starts the server on port 31001.
 The second one needs to have the correct password where it says \<password>.
 
+NOTE: setting the database_url can be done in a .envrc file and this will take precedence over the command line option.
 
 ### Development
 For development use, I switch the client to port 31000 and fire up a clojure repl using M-x cider-jack-in and run (mount/start)

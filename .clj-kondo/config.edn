@@ -1,2 +1,5 @@
 {:lint-as {mount.core/defstate        clojure.core/def
-           compojure.api.sweet/defapi clojure.core/def}}
+           compojure.api.sweet/defapi clojure.core/def
+           ;;compojure.api.core/GET clj-kondo.lint-as/def-catch-all
+           compojure.api.sweet/GET    clj-kondo.lint-as/def-catch-all
+           }}

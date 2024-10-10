@@ -33,7 +33,7 @@
                  [ring/ring-core "1.7.1"] ; Is this used?
                  [ring/ring-defaults "0.3.2"] ; Is this used?
                  [selmer "1.12.12"] ; layout for the html returned.
-                 [image-lib "0.2.3-SNAPSHOT"]]
+                 [image-lib "0.2.5"]]
 
   :min-lein-version "2.0.0"
 
